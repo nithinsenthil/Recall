@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     } catch (error) {
       return NextResponse.json({ card_id: -1, error: true})
     }
-    
+    console.log("chp1")
     const {data: data1, error: error1} = await supabase
       .from ("cards")
       .insert({
@@ -33,15 +33,17 @@ export async function POST(req: NextRequest) {
       dependencies: body_nlp["dependencies"]})
       .select()
 
+      console.log(error1)
     // const {data: data2, error: error2} = await supabase
     //     .from ("deck")
     //     .update
     //     .increment("num_cards")
     //     .match({deck_id: body["deck_id"]})
     
-    if (!error1) {
+    if (data1 !== null) {
       return NextResponse.json({ card_id: data1[0], error: false})
     } else {
+      console.log("chp3")
       return NextResponse.json({ card_id: -1, error: true})
     }
 
