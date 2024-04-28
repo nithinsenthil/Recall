@@ -1,10 +1,19 @@
+/**
+ * @file update-user/route.ts
+ * @date 4/27/24
+ */
+
 import { NextRequest, NextResponse } from 'next/server'
 import supabase from '../../supabase'
 
-type response_data = {
-    confirm: boolean
-}
-
+/**
+ * @brief Updates a user in the database
+ *
+ * @param user_id The id of the user to update
+ * @param user_name The name of the user
+ * 
+ * @return error: true if there was an error, false otherwise
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

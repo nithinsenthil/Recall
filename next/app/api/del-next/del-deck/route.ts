@@ -1,10 +1,18 @@
+/**
+ * @file del-deck/route.ts
+ * @date 4/27/24
+ */
+
 import { NextRequest, NextResponse } from 'next/server'
 import supabase from '../../supabase'
 
-type response_data = {
-    confirm: boolean
-}
-
+/**
+ * @brief Deletes a deck from the database
+ *
+ * @param deck_id The id of the deck to delete
+ * 
+ * @return data: true if there was an error, false otherwise
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -21,12 +29,12 @@ export async function POST(req: NextRequest) {
     
     
     if (data1 !== null) {
-      return NextResponse.json({ data: true, error: false})
+      return NextResponse.json({error: false})
     } else {
-      return NextResponse.json({ data: -1, error: true})
+      return NextResponse.json({error: true})
     }
 
   } catch (error) {
-    return NextResponse.json({ data: -1, error: true})
+    return NextResponse.json({error: true})
   }
 }

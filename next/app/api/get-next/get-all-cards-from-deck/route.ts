@@ -1,23 +1,19 @@
+/**
+ * @file get-all-cards-from-deck/route.ts
+ * @date 4/27/24
+ */
+
 import { NextRequest, NextResponse } from 'next/server'
 import supabase from '../../supabase'
 
-type response_data = {
-    cards: card_data[]
-}
-
-type card_data = { // TODO: Update card schema
-    card_id: number,
-    deck_id: number,
-    term: string,
-    definition: string,
-    ease_factor: number,
-    graduated: boolean,
-    interval: number,
-    next_review: Date,
-    named_entities: string[],
-    embeddings: number[]
-}
-
+/**
+ * @brief Gets all cards from a specified deck
+ *
+ * @param deck_id The id of the deck to get cards from
+ * 
+ * @return cards: JSON[] The cards in the deck
+ * @note Evaluate error before accessing cards
+ */
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
@@ -28,12 +24,12 @@ export async function POST(req: NextRequest) {
         .eq('deck_id', body["deck_id"])
         
         if (data !== null) {
-          return NextResponse.json({ decks: data, error: false})
+          return NextResponse.json({ cards: data, error: false})
         } else {
-          return NextResponse.json({ decks: -1, error: true})
+          return NextResponse.json({error: true})
         }
     
       } catch (error) {
-        return NextResponse.json({ decks: -1, error: true})
+        return NextResponse.json({error: true})
       }
 }
