@@ -44,7 +44,7 @@ def get_score(
 
     # Main grading logic
     if factual_accuracy >= 0.5 and not negation_mismatch:
-        return factual_accuracy * (sim + 1)
+        return min(1, factual_accuracy * (sim + 0.5))
     return 0.0
 
 
