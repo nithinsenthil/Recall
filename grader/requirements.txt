@@ -1,0 +1,6 @@
+fastapi
+pydantic
+torch
+sentence_transformers
+spacy
+uvicorn
