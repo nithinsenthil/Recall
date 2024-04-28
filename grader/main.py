@@ -14,7 +14,7 @@ class UserAnswer(BaseModel):
     interval: int
     next_review: str
     named_entities: set[str]
-    embedding: list[list[float]]
+    embeddings: list[list[float]]
     dependencies: list[str]
 
 app = FastAPI()
@@ -26,11 +26,12 @@ async def root():
 @app.post("/embed-card")
 async def create_card(req: BaseCard):
     try:
+        print("Hit endpoint!")
         embed = create_embedding(sentence=req.definition).tolist()
         n_ents, deps = create_entities(sentence=req.definition)
         res = {
             "named_entities": n_ents,
-            "embedding": embed,
+            "embeddings": embed,
             "dependencies": deps
         }
         return res
@@ -47,7 +48,7 @@ async def eval_card(req: UserAnswer):
         n_ents_u, deps_u = create_entities(sentence=req.user_text)
 
         # Get score for user response
-        score = get_score(embed_c=req.embedding,
+        score = get_score(embed_c=req.embeddings,
                         embed_u=embed_u, 
                         n_ents_c=req.named_entities, 
                         n_ents_u=n_ents_u,
